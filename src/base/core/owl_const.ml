@@ -113,7 +113,12 @@ let min_float32 = ~-.340282346638528859811704183484516925440.0
 
 let max_float32 = 340282346638528859811704183484516925440.0
 
-let min_float64 = Stdlib.min_float
+external float_of_bits : int64 -> float
+  = "caml_int64_float_of_bits" "caml_int64_float_of_bits_unboxed"
+  [@@unboxed] [@@noalloc]
+
+(* Probably not right, but it's a really big negative number! *)
+let min_float64 = float_of_bits 0xFFEF_FFFF_FFFF_FFFFL
 
 let max_float64 = Stdlib.max_float
 
